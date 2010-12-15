@@ -7,11 +7,11 @@
       <nav>
         <p>Demos:</p>
         <ul>
-          <li><a href="../projetos/slideshow/zero.html">zero</a></li>
-          <li><a href="../projetos/slideshow/um.html">um</a></li>
-          <li><a href="../projetos/slideshow/dois.html">dois</a></li>
-          <li><a href="../projetos/slideshow/tres.html">três</a></li>
-          <li><a href="../projetos/slideshow/quatro.html">quatro</a></li>
+          <li><a href="../../projetos/slideshow/zero.html">zero</a></li>
+          <li><a href="../../projetos/slideshow/um.html">um</a></li>
+          <li><a href="../../projetos/slideshow/dois.html">dois</a></li>
+          <li><a href="../../projetos/slideshow/tres.html">três</a></li>
+          <li><a href="../../projetos/slideshow/quatro.html">quatro</a></li>
         </ul>
       </nav>
 
@@ -26,7 +26,7 @@
       <section>
         <header>
           <h1>
-            <a href="../projetos/slideshow/zero.html">zero</a>: html e css
+            <a href="../../projetos/slideshow/zero.html">zero</a>: html e css
           </h1>
         </header>
         <p>Este será o html usado neste exemplo, todos os slides estão em uma lista e aparecem um abaixo do outro:</p>
@@ -76,13 +76,13 @@
 </html>
           </code>
 
-        <p>Demo <a href="../projetos/slideshow/zero.html">zero</a></p>
+        <p>Demo <a href="../../projetos/slideshow/zero.html">zero</a></p>
       </section>
 
       <section>
         <header>
           <h1>
-            <a href="../projetos/slideshow/um.html">Um</a>: javascript inicial
+            <a href="../../projetos/slideshow/um.html">Um</a>: javascript inicial
           </h1>
         </header>
         <p>A ideia é pegar o html, esconder os slides e mostrar o primeiro.</p>
@@ -129,14 +129,14 @@
 </script>
           </code>
 
-        <p>Demo <a href="../projetos/slideshow/um.html">um</a></p>
+        <p>Demo <a href="../../projetos/slideshow/um.html">um</a></p>
       </section>
 
 
       <section>
         <header>
           <h1>
-            <a href="../projetos/slideshow/dois.html">Dois</a>: animação
+            <a href="../../projetos/slideshow/dois.html">Dois</a>: animação
           </h1>
         </header>
         <p>Tá, funcionou, mas ficou sem graça, os slides trocam automaticamente sem efeito nenhum.</p>
@@ -179,7 +179,7 @@ $('#slideanterior').click(function(){
 });
           </code>
 
-        <p>Demo <a href="../projetos/slideshow/dois.html">dois</a></p>
+        <p>Demo <a href="../../projetos/slideshow/dois.html">dois</a></p>
         <p>Repare que a animação de recolher usa um callback para começar a mostrar o outro slide só depois que o primeiro já terminou de recolher.</p>
         <p>Mas ainda está meio estranha, tanto a animação "anterior" quanto "próxima" estão iguais, seria melhor que fossem diferentes.</p>
       </section>
@@ -188,7 +188,7 @@ $('#slideanterior').click(function(){
       <section>
         <header>
           <h1>
-            <a href="../projetos/slideshow/tres.html">Três</a>: um pra cada lado
+            <a href="../../projetos/slideshow/tres.html">Três</a>: um pra cada lado
           </h1>
         </header>
         <p>Para animar dqa esquerda para a direita primeiro o elemento precisa estar à esquerda <em>$slideativo.show().css("left", $slideativo.outerWidth()*-1).css('opacity', '0');</em>. Vários truques se escondem nessa linha:</p>
@@ -244,7 +244,7 @@ $('#slideanterior').click(function(){
 });
           </code>
 
-        <p>Repare que em uma está usando callback e na outra não, dessa maneira uma espera desaparecer para mostrar enquanto na outra os slides correm grudados, fica à escolha do freguês, veja a <a href="../projetos/slideshow/tres.html">demo três</a>.</p>
+        <p>Repare que em uma está usando callback e na outra não, dessa maneira uma espera desaparecer para mostrar enquanto na outra os slides correm grudados, fica à escolha do freguês, veja a <a href="../../projetos/slideshow/tres.html">demo três</a>.</p>
         <p>Foi necessário também adicionar um <code>.css("left","0")</code> para posicionar corretamente os slides.</p>
         <p>O css também teve que mudar um pouco:</p>
 
@@ -264,18 +264,18 @@ $('#slideanterior').click(function(){
           </code>
 
         <p>Pronto, agora a animação é diferente, ao clicar em "anterior" os slides correm para a esquerda e em "próximo" os slides correm para a direita.</p>
-        <p>Demo <a href="../projetos/slideshow/tres.html">Três</a></p>
+        <p>Demo <a href="../../projetos/slideshow/tres.html">Três</a></p>
       </section>
 
 
       <section>
         <header>
           <h1>
-            <a href="../projetos/slideshow/quatro.html">Quatro</a>: Plugin
+            <a href="../../projetos/slideshow/quatro.html">Quatro</a>: Plugin
           </h1>
         </header>
         <p>Beleza, agora se quiser mesmo fazer um plugin fica fácil, esse DIY não é sobre fazer plugin então vou economizar e usar o <a href="http://starter.pixelgraphics.us/">starter</a>, um gerador de código que gera um template para plugins jQuery.</p>
-        <p>O código então fica assim (<a href="../projetos/slideshow/jquery.slideshow.js">jquery.slideshow.js</a>) (um pouco maior que as 17 linhas iniciais):</p>
+        <p>O código então fica assim (<a href="../../projetos/slideshow/jquery.slideshow.js">jquery.slideshow.js</a>) (um pouco maior que as 17 linhas iniciais):</p>
 
           <code>
 (function ($) {
@@ -385,11 +385,11 @@ $('#slideanterior').click(function(){
 </script>
           </code>
 
-        <p>Demo <a href="../projetos/slideshow/quatro.html">quatro</a></p>
+        <p>Demo <a href="../../projetos/slideshow/quatro.html">quatro</a></p>
       </section>
 
     </article>
 <p>No total demorou 1 hora para chegar na etapa 3, acho que demoraria mais ou menos a mesma coisa para encontrar um plugin que fizesse algo parecido, mas também poderia gastar esse tempo todo e não encontrar nenhum adequado.</p>
 <p>Você já passou por isso também? Deixe um comentário.</p>
-<p><em>PS:</em> este post foi feito em html5, confira o código na <a href="../projetos/slideshow/index.html">demo principal</a>
+<p><em>PS:</em> este post foi feito em html5, confira o código na <a href="../../projetos/slideshow/index.html">demo principal</a>
 <p>Também no github: <a href="https://github.com/codexico/diy-slideshow-jQuery">https://github.com/codexico/diy-slideshow-jQuery</a></p>
