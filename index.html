@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>tutorial DIY slideshow</title>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <header>
+
+      <hgroup>
+        <h1>codexico blog</h1>
+        <h2>Faça você mesmo um slideshow em jQuery</h2>
+      </hgroup>
+
+      <nav>
+        <p>Demos:</p>
+        <ul>
+          <li><a href="zero.html">zero</a></li>
+          <li><a href="um.html">um</a></li>
+          <li><a href="dois.html">dois</a></li>
+          <li><a href="tres.html">três</a></li>
+          <li><a href="quatro.html">quatro</a></li>
+        </ul>
+      </nav>
+
+    </header>
+
+    <article>
+      <time datetime="2010-12-15" pubdate>15 de dezembro de 2010</time>
+      <p>Neste artigo vamos descobrir que não é necessário ir atrás de plugins toda vez que precisamos fazer algo em jQuery. A biblioteca tem muitas ferramentas e quando a tarefa é simples é mais rápido fazer você mesmo (DIY) do que procurar plugins por aí.</p>
+      <p>Por exemplo, outro dia eu precisava que um conteúdo fosse trocado por outro quando o user clicasse em "próximo", alguns chamam de slideshow, outros de apresentação, tem muitos plugins por aí, que fazem todo tipo de coisa com todo tipo de animação, mil tipos de piruetas psicodélicas...</p>
+      <p>Até encontrar um que fizesse o necessário e sem bugs e fácil de usar demoraria um pouco, e para piorar o sistema em que eu estava mexendo não permitia incluir outros arquivos javascripts e tinha pouco tempo para entregar. Muitas vezes a gente perde um tempão procurando plugins e no final nenhum dos 15 encontrados servem, esse parecia ser o caso, os plugins eram bem diferentes um do outro. Então resolvi fazer eu mesmo.</p>
+
+      <section>
+        <header>
+          <h1>
+            <a href="zero.html">zero</a>: html e css
+          </h1>
+        </header>
+        <p>Este será o html usado neste exemplo, todos os slides estão em uma lista e aparecem um abaixo do outro:</p>
+        <pre>
+          <code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pt"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;tutorial DIY slideshow&lt;/title&gt;
+    &lt;style type="text/css"&gt;
+    #slides{
+      list-style-type: none;
+    }
+    .slide{
+      width: 200px;
+      height: 200px;
+      border: 1px solid #000;
+    }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="slideshow" &gt;
+      &lt;p&gt;
+        &lt;button id="slideanterior" class="slideshow-button" &gt;anterior &lt;/button&gt; &nbsp;
+        &lt;button id="slideproximo" class="slideshow-button" &gt; próximo&lt;/button&gt;
+      &lt;/p&gt;
+      &lt;ul id="slides"&gt;
+        &lt;li class="slide"&gt;
+          1
+        &lt;/li&gt;
+        &lt;li class="slide"&gt;
+          2
+        &lt;/li&gt;
+        &lt;li class="slide"&gt;
+          3
+        &lt;/li&gt;
+        &lt;li class="slide"&gt;
+          4
+        &lt;/li&gt;
+        &lt;li class="slide"&gt;
+          5
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;&lt;!-- fim slideshow --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+          </code>
+        </pre>
+        <p>Demo <a href="zero.html">zero</a></p>
+      </section>
+
+      <section>
+        <header>
+          <h1>
+            <a href="um.html">Um</a>: javascript inicial
+          </h1>
+        </header>
+        <p>A ideia é pegar o html, esconder os slides e mostrar o primeiro.</p>
+        <p>Então adicionar um listener em cada botão, ao clicar o slide ativo é escondido substituído pelo próximo.</p>
+        <p>Mais uma linhazinha para quando chegar ao último voltar ao primeiro.</p>
+        <p>Em 17 linhas (descontando os comentários) já está montado um slideshow funcional:</p>
+        <pre>
+          <code>
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  jQuery(document).ready(function($) {
+
+    //identifica o slideshow
+    $slideshow = $("#slideshow");
+    //inicialmente esconde os slides
+    $slideshow.find("li.slide").hide();
+    //encontra o prmeiro slide e ativa-o
+    $slideativo = $slideshow.find("li.slide").first().addClass('slideatual').show();
+
+    //ao clicar mostra o proximo slide
+    $('#slideproximo').click(function(){
+      //esconde o slide atual
+      $slideativo.hide();
+
+      //procura o proximo
+      $slideativo = $slideshow.find("li.slideatual").next();
+      if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").first();//volta ao primeiro
+
+      //remove o marcador do slide anterior
+      $slideshow.find("li.slideatual").removeClass("slideatual");
+      //coloca o marcador e mostra
+      $slideativo.addClass("slideatual").show();
+    });
+
+    //ao clicar mostra o slide anterior
+    $('#slideanterior').click(function(){
+      $slideativo.hide();
+      $slideativo = $slideshow.find("li.slideatual").prev();
+      if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").last();//volta ao ultimo
+      $slideshow.find("li.slideatual").removeClass("slideatual");
+      $slideativo.addClass("slideatual").show();
+    });
+  });
+&lt;/script&gt;
+          </code>
+        </pre>
+        <p>Demo <a href="um.html">um</a></p>
+      </section>
+
+
+      <section>
+        <header>
+          <h1>
+            <a href="dois.html">Dois</a>: animação
+          </h1>
+        </header>
+        <p>Tá, funcionou, mas ficou sem graça, os slides trocam automaticamente sem efeito nenhum.</p>
+        <p>Vamos trocar o show() e hide() por um animate().</p>
+        <p></p>
+        <pre>
+          <code>
+//ao clicar mostra o proximo slide
+$('#slideproximo').click(function(){
+  //esconde o slide atual
+  $slideativo.animate({
+    "width": "toggle", "opacity": "toggle"
+  }, "slow",  function() {//com callback
+    //
+    //procura o proximo
+    $slideativo = $slideshow.find("li.slideatual").next();
+    if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").first();//volta ao primeiro
+
+    //remove o marcador do slide anterior
+    $slideshow.find("li.slideatual").removeClass("slideatual");
+    //coloca o marcador e mostra
+    $slideativo.addClass("slideatual").animate({
+      "width": "toggle", "opacity": "toggle"
+    }, "slow");
+  });
+});
+
+//ao clicar mostra o slide anterior
+$('#slideanterior').click(function(){
+  $slideativo.animate({
+    "width": "toggle", "opacity": "toggle"
+  }, "slow");//sem callback
+
+  $slideativo = $slideshow.find("li.slideatual").prev();
+  if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").last();//volta ao ultimo
+  $slideshow.find("li.slideatual").removeClass("slideatual");
+  $slideativo.addClass("slideatual").animate({
+    "width": "toggle", "opacity": "toggle"
+  }, "slow");
+});
+          </code>
+        </pre>
+        <p>Demo <a href="dois.html">dois</a></p>
+        <p>Repare que a animação de recolher usa um callback para começar a mostrar o outro slide só depois que o primeiro já terminou de recolher.</p>
+        <p>Mas ainda está meio estranha, tanto a animação "anterior" quanto "próxima" estão iguais, seria melhor que fossem diferentes.</p>
+      </section>
+
+
+      <section>
+        <header>
+          <h1>
+            <a href="tres.html">Três</a>: um pra cada lado
+          </h1>
+        </header>
+        <p>Para animar dqa esquerda para a direita primeiro o elemento precisa estar à esquerda <code>$slideativo.show().css("left", $slideativo.outerWidth()*-1).css('opacity', '0');</code>. Vários truques se escondem nessa linha:</p>
+        <p><code>outerWidth()</code> serve para determinar o tamanho do slide</p>
+        <p><code>css("left", $slideativo.outerWidth()*-1)</code> *-1 para colocar o slide à esquerda</p>
+        <p><code>show()</code>, mas só funciona se o elemento estiver com "show"</p>
+        <p><code>css('opacity', '0')</code> está com "show" mas ainda não deve aparecer.</p>
+        <pre>
+          <code>
+$slideativo = $slideshow.find("li.slide").first().addClass('slideatual').css("left","0").show();
+
+//ao clicar mostra o proximo slide
+$('#slideproximo').click(function(){
+  //esconde o slide atual para a direita
+  $slideativo.animate({
+    "left": "+="+$slideativo.outerWidth(),  "opacity": "0"
+  }, "slow",  function() {//callback
+    //procura o proximo
+    $slideativo = $slideshow.find("li.slideatual").next();
+    if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").first();//volta ao primeiro
+
+    //remove o marcador do slide anterior
+    $slideshow.find("li.slideatual").removeClass("slideatual");
+
+    //posiciona na esquerda
+    $slideativo.show().css("left", $slideativo.outerWidth()*-1).css('opacity', '0');
+    //coloca o marcador e mostra
+    $slideativo.addClass("slideatual").animate({
+      "left": "0", "opacity": "1"
+    }, "slow");
+  });
+});
+
+//ao clicar mostra o slide anterior
+$('#slideanterior').click(function(){
+  //esconde o slide atual para a esquerda
+  $slideativo.animate({
+    "left": "-="+$slideativo.outerWidth(), "opacity": "0"
+  }, "slow");
+  //procura o proximo
+  $slideativo = $slideshow.find("li.slideatual").prev();
+  if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").last();//volta ao ultimo
+
+  //remove o marcador do slide anterior
+  $slideshow.find("li.slideatual").removeClass("slideatual");
+
+  //posiciona na direita
+  $slideativo.show().css("left", $slideativo.outerWidth()).css('opacity', '0');
+  //coloca o marcador e mostra
+  $slideativo.addClass("slideatual").animate({
+    "left": "0", "opacity": "1"
+  }, "slow");
+});
+          </code>
+        </pre>
+        <p>Repare que em uma está usando callback e na outra não, dessa maneira uma espera desaparecer para mostrar enquanto na outra os slides correm grudados, fica à escolha do freguês, veja a <a href="tres.html">demo três</a>.</p>
+        <p>Foi necessário também adicionar um <code>.css("left","0")</code> para posicionar corretamente os slides.</p>
+        <p>O css também teve que mudar um pouco:</p>
+        <pre>
+          <code>
+#slides{
+  list-style-type: none;
+  width: 200px;
+  overflow: hidden;
+}
+.slide{
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  left: -200px;
+  position: absolute;
+}
+          </code>
+        </pre>
+        <p>Pronto, agora a animação é diferente, ao clicar em "anterior" os slides correm para a esquerda e em "próximo" os slides correm para a direita.</p>
+        <p>Demo <a href="tres.html">Três</a></p>
+      </section>
+
+
+      <section>
+        <header>
+          <h1>
+            <a href="quatro.html">Quatro</a>: Plugin
+          </h1>
+        </header>
+        <p>Beleza, agora se quiser mesmo fazer um plugin fica fácil, esse DIY não é sobre fazer plugin então vou economizar e usar o <a href="http://starter.pixelgraphics.us/">starter</a>, um gerador de código que gera um template para plugins jQuery.</p>
+        <p>O código então fica assim (<a href="jquery.slideshow.js">jquery.slideshow.js</a>) (um pouco maior que as 17 linhas iniciais):</p>
+        <pre>
+          <code>
+(function ($) {
+  //http://starter.pixelgraphics.us/
+  $.slideshow = function (el, options) {
+    // To avoid scope issues, use 'base' instead of 'this'
+    // to reference this class from internal events and functions.
+    var base = this;
+    // Access to jQuery and DOM versions of element
+    base.$el = $(el);
+    base.el = el;
+    // Add a reverse reference to the DOM object
+    base.$el.data("slideshow", base);
+
+    base.init = function(){
+      //junta as opcoes default com as passadas na chamada do plugin
+      base.options = $.extend({},$.slideshow.defaultOptions, options);
+
+      //um nome mais pratico para base.$el
+      $slideshow = base.$el;
+      //inicialmente esconde os slides
+      $slideshow.find("li.slide").hide();
+      //encontra o prmeiro slide e ativa-o
+      $slideativo = $slideshow.find("li.slide").first().addClass('slideatual').css("left","0").show();
+
+      base.proximo();
+      base.anterior();
+    };
+
+    base.proximo = function(paramaters){
+      //ao clicar mostra o proximo slide
+      $('#slideproximo').click(function(){
+        //esconde o slide atual para a direita
+        $slideativo.animate({
+          "left": "+="+$slideativo.outerWidth(),
+          "opacity": "0"
+        }, "slow");
+        //procura o proximo
+        $slideativo = $slideshow.find("li.slideatual").next();
+        if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").first();//volta ao primeiro
+
+        //remove o marcador do slide anterior
+        $slideshow.find("li.slideatual").removeClass("slideatual");
+
+        //posiciona na esquerda
+        $slideativo.show().css("left", $slideativo.outerWidth()*-1).css('opacity', '0');
+        //coloca o marcador e mostra
+        $slideativo.addClass("slideatual").animate({
+          "left": "0",
+          "opacity": "1"
+        }, "slow");
+      });
+    };
+
+    base.anterior = function(paramaters){
+      //ao clicar mostra o slide anterior
+      $('#slideanterior').click(function(){
+        //esconde o slide atual para a esquerda
+        $slideativo.animate({
+          "left": "-="+$slideativo.outerWidth(),
+          "opacity": "0"
+        }, "slow");
+        //procura o proximo
+        $slideativo = $slideshow.find("li.slideatual").prev();
+        if(!$slideativo.size()) $slideativo = $slideshow.find("li.slide").last();//volta ao ultimo
+
+        //remove o marcador do slide anterior
+        $slideshow.find("li.slideatual").removeClass("slideatual");
+
+        //posiciona na direita
+        $slideativo.show().css("left", $slideativo.outerWidth()).css('opacity', '0');
+        //coloca o marcador e mostra
+        $slideativo.addClass("slideatual").animate({
+          "left": "0",
+          "opacity": "1"
+        }, "slow");
+      });
+    };
+
+    // Run initializer
+    base.init();
+  };
+
+  $.slideshow.defaultOptions = {
+  //colocar aqui opcoes default
+  };
+
+  $.fn.slideshow = function(options){
+    return this.each(function () {
+      (new $.slideshow(this, options));
+    });
+  };
+})(jQuery)
+          </code>
+        </pre>
+        <p>E para chamar o plugin basta incluir o script acima e <code>"$('#slideshow').slideshow();"</code></p>
+        <pre>
+          <code>
+&lt;script src="jquery.slideshow.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  jQuery(document).ready(function($) {
+
+    //chama o plugin
+    $('#slideshow').slideshow();
+
+  });
+&lt;/script&gt;
+          </code>
+        </pre>
+        <p>Demo <a href="quatro.html">quatro</a></p>
+      </section>
+
+    </article>
+
+    <footer>
+
+      <p>copyleft 2010 <a href="http://codexico.com.br/blog">codexico</a></p>
+
+    </footer>
+
+  </body>
+</html>
